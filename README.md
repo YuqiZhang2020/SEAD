@@ -19,13 +19,15 @@ Distinct spatial-contact events corresponding to each object are stored in a fil
 # Grammar Diction Learning with ADIOS (./madios)
 
 Usage:
-ModifiedADIOS <filename> <eta> <alpha> <context_size> <coverage> ---OPTIONAL--- <number_of_new_sequences>
+ModifiedADIOS filename eta alpha context_size coverage
 
-<filename>,     file name of each object corpus, such as "object.txt"
-<eta>,          threshold of detecting divergence in the RDS graph, is set to 0.9 in our model.
-<alpha>,        significance test threshold, usually is set to 0.01 in our model.
-<context_size>, size of the context window used for search for Equivalence Class, is set to 5 in our model.
-<coverage>,     threhold for bootstrapping Equivalence classes, is set to 0.65 in our model.
+*filename: file name of each object corpus, such as "object.txt".
+*eta: threshold of detecting divergence in the RDS graph, is set to 0.9 in our model.
+*alpha: significance test threshold, usually is set to 0.01 in our model.
+*context_size: size of the context window used for search for Equivalence Class, is set to 5 in our model.
+*coverage: threhold for bootstrapping Equivalence classes, is set to 0.65 in our model.
+
+The stochastic grammar learned by the AIDIOS algorithm will be stored in the "object.pcfg" file and placed in the "./data/grammar".
 
 
 
