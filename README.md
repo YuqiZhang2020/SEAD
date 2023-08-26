@@ -16,10 +16,9 @@ The stochastic grammar associated with each object is a file named "object.pcfg"
 * duration:
 Distinct spatial-contact events corresponding to each object are stored in a file named "object_duration.txt", such as "sofa_duration.txt", in which, each line corresponds to a spatial-contact event along with its average duration associated with the object.
 
-# Grammar Diction Learning with ADIOS (./madios)
+# Grammar Diction Learning with ADIOS
 
-Usage:
-ModifiedADIOS filename eta alpha context_size coverage
+./madios: ModifiedADIOS filename eta alpha context_size coverage
 
 *filename: file name of each object corpus, such as "object.txt".
 *eta: threshold of detecting divergence in the RDS graph, is set to 0.9 in our model.
