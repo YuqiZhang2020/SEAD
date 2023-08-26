@@ -28,6 +28,12 @@ Distinct spatial-contact events corresponding to each object are stored in a fil
 
 The stochastic grammar learned by the AIDIOS algorithm will be stored in the "object.pcfg" file and placed in the "./data/grammar".
 
+# Scene Graph Prediction
+python ./scene_predict.py
+
+# Scene Graph Prediction
+python ./action_anticipation.py
+
 
 
 
