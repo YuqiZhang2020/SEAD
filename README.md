@@ -1,7 +1,6 @@
 # SEAD
-====
-Scene and Action Joint Prediction Model v1.0
 ==
+Scene and Action Joint Prediction Model v1.0
 
 # Data preparation
 Create the following three directories under the 'data' directory based on the scene graph annotations:
