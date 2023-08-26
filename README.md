@@ -18,7 +18,7 @@ The stochastic grammar associated with each object is a file named "object.pcfg"
 Distinct spatial-contact events corresponding to each object are stored in a file named "object_duration.txt", such as "sofa_duration.txt", in which, each line corresponds to a spatial-contact event along with its average duration associated with the object.
 
 # Grammar Diction Learning with ADIOS (./madios)
- --> object.pcfg
+
 Usage:
 ModifiedADIOS <filename> <eta> <alpha> <context_size> <coverage> ---OPTIONAL--- <number_of_new_sequences>
 
