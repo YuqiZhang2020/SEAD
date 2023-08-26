@@ -1,5 +1,4 @@
 # SEAD
-==
 Scene and Action Joint Prediction Model v1.0.
 
 # Data preparation
