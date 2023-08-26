@@ -2,7 +2,7 @@
 Scene and Action Joint Prediction Model v1.0.
 
 # Data preparation
-Download [Action Genome annotations](https://drive.google.com/drive/folders/1LGGPK_QgGbh9gH9SDFv_9LIhBliZbZys) and place them under ./annotations.
+Download [Action Genome annotations](https://drive.google.com/drive/folders/1LGGPK_QgGbh9gH9SDFv_9LIhBliZbZys) and place them under ./annotations/.
 
 Create the following three directories under the ./data directory:
 
@@ -25,7 +25,7 @@ Distinct spatial-contact events corresponding to each object are stored in a fil
 * context_size: size of the context window used for search for Equivalence Class, is set to 5 in our model.
 * coverage: threhold for bootstrapping Equivalence classes, is set to 0.65 in our model.
 
-The stochastic grammar learned by the AIDIOS algorithm will be stored in the "object.pcfg" file and placed in the "./data/grammar".
+The stochastic grammar learned by the AIDIOS algorithm will be stored in the "object.pcfg" file and placed in the "./data/grammar/".
 
 # Scene Graph Prediction
 python ./scene_predict.py
