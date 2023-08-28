@@ -190,66 +190,49 @@ def find_closest_tokens(language, tokens, truncate=False):
     return min_distance, best_matched_tokens                 
 
 
-def predict(paths):
+def predict(paths, line, t):
     grammar_dict = read_induced_grammar(paths)
     duration_dict = read_durations(paths)
     languages = read_languages(paths)
     
-    with open('./module1_predict_3s.txt', 'w+') as results:
-        t = 3
-        with open('./spatial_contact_events_3s.txt') as f:
-            lines = f.readlines()
-            for line in lines:
-                S = {}
-                v = line.strip().split(";")
-                for i in range(len(v)):
-                    frame = v[i].strip().split(" ")
-                    for j in range(len(frame)):
-                        o_rs = frame[j].split(",")
-                        for o_r in o_rs:
-                            if o_r != "":
-                                o_ = o_r.split(":")[0]
-                                r_ = o_r.split(":")[1]
-                                if o_ not in S:
-                                    S[o_] = [r_]
-                                elif r_ != S[o_][-1]:
-                                    S[o_].append(r_)
-                results.write(line) 
-
-                for k in S.keys():
-                    grammar = grammar_dict[k]
-                    language = languages[k]
-                    duration = duration_dict[k]
-                    s = " ".join(S[k])
-                    if s.split()[-1] not in duration:
-                        d, matched_tokens = find_closest_tokens(language, s.split()[-1])
-                        tn = duration[matched_tokens[0]]
-                    else:
-                        tn = duration[s.split()[-1]]
-                    predict_or = ""
-                    while(tn<t):
-                        tokens = s.split()
-                        d, matched_tokens = find_closest_tokens(language, tokens)
-                        lr, pr = predict_next_symbols(grammar, matched_tokens)
-                        if len(pr) != 0:
-                            res = lr[pr.index(max(pr))]
-                            predict_or = k + ":" + res
-                            if res in duration:
-                                tn += duration[res]
-                            s += (" " + res)
-                        else:
-                            predict_or = ""
-                            break
-                    results.write(predict_or + ",")
-                results.write(";\n")
-
-
-def main():
-    paths = config.Paths()
-    start_time = time.time()
-    predict(paths)
-    print('Time elapsed: {}'.format(time.time() - start_time))
-
-
-if __name__ == '__main__':
-    main()
+    S = {}
+    v = line.strip().split(";")
+    for i in range(len(v)):
+        frame = v[i].strip().split(" ")
+        for j in range(len(frame)):
+            o_rs = frame[j].split(",")
+            for o_r in o_rs:
+                if o_r != "":
+                    o_ = o_r.split(":")[0]
+                    r_ = o_r.split(":")[1]
+                    if o_ not in S:
+                        S[o_] = [r_]
+                    elif r_ != S[o_][-1]:
+                        S[o_].append(r_)
+    results = []
+    for k in S.keys():
+        grammar = grammar_dict[k]
+        language = languages[k]
+        duration = duration_dict[k]
+        s = " ".join(S[k])
+        if s.split()[-1] not in duration:
+            d, matched_tokens = find_closest_tokens(language, s.split()[-1])
+            tn = duration[matched_tokens[0]]
+        else:
+            tn = duration[s.split()[-1]]
+        predict_or = ""
+        while(tn<t):
+            tokens = s.split()
+            d, matched_tokens = find_closest_tokens(language, tokens)
+            lr, pr = predict_next_symbols(grammar, matched_tokens)
+            if len(pr) != 0:
+                res = lr[pr.index(max(pr))]
+                predict_or = k + ":" + res
+                if res in duration:
+                    tn += duration[res]
+                s += (" " + res)
+            else:
+                predict_or = ""
+                break
+        results.append(predict_or)
+    return ",".join(results) + ";\n"
