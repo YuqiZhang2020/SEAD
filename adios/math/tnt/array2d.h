@@ -141,7 +141,7 @@ template <typename T> T mahalanobis(const Array2D<T> &A, const Array1D<T> &b);
 template <typename T> Array2D<T> mahalanobis(const Array2D<T> &A, const Array2D<T> &B);
 template <typename T> Array2D<T> dist2(const Array2D<T> &A, const Array2D<T> &B);
 
-// overloaded maths operators
+// overloaded math operators
 template <typename T> Array2D<T> log(const Array2D<T> &A);
 template <typename T> Array2D<T> exp(const Array2D<T> &A);
 template <typename T> Array2D<T> sqrt(const Array2D<T> &A);
@@ -1290,7 +1290,7 @@ Array2D<T> dist2(const Array2D<T> &A, const Array2D<T> &B)
 
 
 //////////////////////////////////////////////////////////////////////////////
-// overloaded maths operators
+// overloaded math operators
 //////////////////////////////////////////////////////////////////////////////
 
 // B = log(a)
