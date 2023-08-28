@@ -7,15 +7,15 @@ Download [Action Genome annotations](https://drive.google.com/drive/folders/1LGG
 Create the following three directories under the ./data/ directory:
 
 * __corpus__:
-The corpus for each object is a file named "object.txt", such as "sofa.txt", in which, each line corresponds to a spatial-contact event sequence (beginning with "*", and concluding with "#") for a video.
+This directory stores the corpus files for all objects. The corpus for each object is a file named "object.txt", such as "sofa.txt", in which, each line corresponds to a spatial-contact event sequence for a video (starting with "*" and ending with "#").
 
 * __grammar__:
-The stochastic grammar associated with each object is a file named "object.pcfg", such as "sofa.pcfg" (These grammar files learn from the following "Grammar Diction Learning" step.
+This directory stores the grammar files for all objects. Each object has an associated stochastic grammar file named "object.pcfg", such as "sofa.pcfg". These grammar files are learned from the following "Grammar Dictionary Learning" step.
 
 * __duration__:
-Distinct spatial-contact events corresponding to each object are stored in a file named "object_duration.txt", such as "sofa_duration.txt", in which, each line corresponds to a spatial-contact event along with its average duration associated with the object.
+This directory stores the duration of spatial-contact events looking up files for all objects. Distinct spatial-contact events corresponding to each object are stored in a file named "object_duration.txt", such as "sofa_duration.txt", in which, each line corresponds to a spatial-contact event along with its average duration associated with the object.
 
-# Grammar Diction Learning with ADIOS
+# Grammar Dictionary Learning with ADIOS
 
 ./madios: ModifiedADIOS filename eta alpha context_size coverage
 
