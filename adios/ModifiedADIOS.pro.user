@@ -285,8 +285,8 @@
     </valuelist>
     <value type="int" key="PE.EnvironmentAspect.Base">2</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/xx/Downloads/madios/ModifiedADIOS.pro</value>
-    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">/home/xx/Downloads/madios/ModifiedADIOS.pro</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/xx/Downloads/adios/ModifiedADIOS.pro</value>
+    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">/home/xx/Downloads/adios/ModifiedADIOS.pro</value>
     <value type="QString" key="RunConfiguration.Arguments"></value>
     <value type="bool" key="RunConfiguration.Arguments.multi">false</value>
     <value type="QString" key="RunConfiguration.OverrideDebuggerStartup"></value>
