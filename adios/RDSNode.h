@@ -1,7 +1,7 @@
 #ifndef RDSNODE_H
 #define RDSNODE_H
 
-#include "maths/tnt/array2d.h"
+#include "math/tnt/array2d.h"
 #include "LexiconUnit.h"
 #include "ADIOSUtils.h"
 
