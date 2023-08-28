@@ -19,19 +19,19 @@ This directory stores the duration of spatial-contact events for all objects. Di
 
 `ModifiedADIOS filename eta alpha context_size coverage`
 
-* filename: file name of each object corpus, such as "object.txt".
-* eta: threshold of detecting divergence in the RDS graph, is set to 0.9 in our model.
-* alpha: significance test threshold, usually is set to 0.01 in our model.
-* context_size: size of the context window used for search for Equivalence Class, is set to 5 in our model.
-* coverage: threhold for bootstrapping Equivalence classes, is set to 0.65 in our model.
+* __filename__: the file name of each object's corpus in "./data/corpus/", such as "sofa.txt".
+* __eta__: is set to 0.9 in our model.
+* __alpha__: significance test threshold, is set to 0.01 in our model.
+* __context_size__:  the size of the context window used for searching the equivalence classes, is set to 5 in our model.
+* __coverage__:  the minimum overlap for bootstrapping equivalence classes, is set to 0.65 in our model.
 
-The stochastic grammar learned by the AIDIOS algorithm will be stored in the "object.pcfg" file and placed in the "./data/grammar/".
-
-# Scene Graph Prediction
-python ./scene_predict.py
+The stochastic grammars learned by this step are stored in "./data/corpus/", such as "sofa.pcfg".
 
 # Scene Graph Prediction
-python ./action_anticipation.py
+`python ./scene_predict.py`
+
+# Scene Graph Prediction
+`python ./action_anticipation.py`
 
 
 
