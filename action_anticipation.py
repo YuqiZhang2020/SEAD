@@ -16,7 +16,7 @@ with open('./annotations/relationship_classes.txt', 'r') as f:
     for line in f.readlines():
         relationship_classes.append(line.strip())
 
-object_classes = ['__background__']
+object_classes = []
 with open('./annotations/object_classes.txt', 'r') as f:
     for line in f.readlines():
         object_classes.append(line.strip())
@@ -29,14 +29,14 @@ def encode_sg(filename, object_classes, relationship_classes, MAX_SEQUENCE_LENGT
         for relations in rs:
             v_x = []
             for sg in relations.strip().split(";"):
-                f_x = np.zeros([len(object_classes), len(relationship_classes)], np.float16)
+                f_x = np.zeros([len(relationship_classes), len(object_classes)], np.float16)
                 orps = sg.split(",")
                 for orp in orps:
                     o_ = orp.split(":")[0]
                     sr_ = orp.split(":")[1].split("/")[0]
                     cr_ = orp.split(":")[1].split("/")[1]
-                    f_x[object_classes.index(o_), relationship_classes.index(sr_)] = 1
-                    f_x[object_classes.index(o_), relationship_classes.index(cr_)] = 1
+                    f_x[relationship_classes.index(sr_),object_classes.index(o_)] = 1
+                    f_x[relationship_classes.index(cr_),object_classes.index(o_)] = 1
                 v_x.append(f_x)
             x.append(v_x)
     x = np.asarray(x)
@@ -62,19 +62,14 @@ def create_dataset():
     MAX_SEQUENCE_LENGTH = 4
     x = encode_sg("relation_train_x.txt", object_classes, relationship_classes, MAX_SEQUENCE_LENGTH)
     y = encode_actions("action_train_y.txt", label)
-    tx = encode_sg("relation_train_x.txt", object_classes, relationship_classes, MAX_SEQUENCE_LENGTH)
-    ty = encode_actions("action_train_y.txt", label)
     l = len(label)
-    return x, tx, y, ty, l
+    return x, y, l
 
 
-train_X, tx, train_y, ty, l, test = create_dataset()
+train_X, train_y, l = create_dataset()
 
 train_X = train_X.reshape(train_X.shape[0], train_X.shape[1], train_X.shape[2]*train_X.shape[3])
 train_X = train_X.astype('float16')
-
-tx = tx.reshape(tx.shape[0], tx.shape[1], tx.shape[2]*tx.shape[3])
-tx = tx.astype('float16')
 
 train_X, val_X, train_y, val_y = train_test_split(train_X, train_y, test_size=0.2, random_state=1)
 
