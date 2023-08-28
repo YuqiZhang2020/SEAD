@@ -4,7 +4,7 @@ Scene and Action Joint Prediction Model v1.0.
 # Data preparation
 Download [Action Genome annotations](https://drive.google.com/drive/folders/1LGGPK_QgGbh9gH9SDFv_9LIhBliZbZys) and place them under ./annotations/.
 
-Create the following three directories under the ./data directory:
+Create the following three directories under the ./data/ directory:
 
 * corpus:
 The corpus for each object is a file named "object.txt", such as "sofa.txt", in which, each line corresponds to a spatial-contact event sequence (beginning with "*", and concluding with "#") for a video.
