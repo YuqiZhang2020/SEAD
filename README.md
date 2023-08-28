@@ -21,7 +21,7 @@ This directory stores the duration of spatial-contact events for all objects. Di
 
 * __filename__: the file name of each object's corpus in "./data/corpus/", such as "sofa.txt".
 * __eta__: is set to 0.9 in our model.
-* __alpha__: significance test threshold, is set to 0.01 in our model.
+* __alpha__: is set to 0.01 in our model.
 * __context_size__:  the size of the context window used for searching the equivalence classes, is set to 5 in our model.
 * __coverage__:  the minimum overlap for bootstrapping equivalence classes, is set to 0.65 in our model.
 
