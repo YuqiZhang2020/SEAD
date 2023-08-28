@@ -25,7 +25,7 @@ This directory stores the duration of spatial-contact events for all objects. Di
 * __context_size__:  the size of the context window used for searching the equivalence classes, is set to 5 in our model.
 * __coverage__:  the minimum overlap for bootstrapping equivalence classes, is set to 0.65 in our model.
 
-The stochastic grammars learned by this step are stored in "./data/corpus/", such as "sofa.pcfg".
+The stochastic grammars learned by this step are stored in "./data/grammar/", such as "sofa.pcfg".
 
 # Scene Graph Prediction
 `python ./scene_predict.py`
