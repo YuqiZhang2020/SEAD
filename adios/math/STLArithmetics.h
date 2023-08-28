@@ -276,7 +276,7 @@ std::vector<T> dotmult(const std::vector<T> &v)
 }
 
 
-// special maths functions for STL vector
+// special math functions for STL vector
 
 template <typename T>
 std::vector<T> pow(const std::vector<T> &a, const T &c)
