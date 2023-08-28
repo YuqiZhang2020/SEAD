@@ -13,7 +13,7 @@ This directory stores the corpus files for all objects. The corpus for each obje
 This directory stores the grammar files for all objects. Each object has an associated stochastic grammar file named "object.pcfg", such as "sofa.pcfg". These grammar files are learned from the following "Grammar Dictionary Learning" step.
 
 * __duration__:
-This directory stores the duration of spatial-contact events looking up files for all objects. Distinct spatial-contact events corresponding to each object are stored in a file named "object_duration.txt", such as "sofa_duration.txt", in which, each line corresponds to a spatial-contact event along with its average duration associated with the object.
+This directory stores the duration of spatial-contact events for all objects. Distinct spatial-contact events corresponding to each object are stored in a file named "object_duration.txt", such as "sofa_duration.txt", where each line corresponds to a spatial-contact event along with its average duration associated with the object.
 
 # Grammar Dictionary Learning with ADIOS
 
