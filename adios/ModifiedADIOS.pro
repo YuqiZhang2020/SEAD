@@ -4,8 +4,8 @@
 
 TEMPLATE = app
 TARGET +=
-DEPENDPATH += . utils maths maths/tnt 
-INCLUDEPATH += . utils maths maths/tnt
+DEPENDPATH += . utils math math/tnt 
+INCLUDEPATH += . utils math math/tnt
 CONFIG += release
 CONFIG -= qt
 QMAKE_CXXFLAGS_RELEASE += -pedantic -ansi
@@ -31,6 +31,6 @@ SOURCES += main.cpp \
            SpecialLexicons.cpp \
            SignificantPattern.cpp \
            EquivalenceClass.cpp \
-           maths/special.cpp \
+           math/special.cpp \
            utils/MiscUtils.cpp \
            utils/TimeFuncs.cpp
