@@ -1,1 +1,1 @@
-# sofa duration
+# Extract the duration of the spatial-contact events associated with the sofa
