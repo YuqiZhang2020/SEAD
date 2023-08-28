@@ -7,17 +7,17 @@ from keras import regularizers
 
 
 label = []
-with open('label.txt', 'r') as f:
+with open('./annotations/Charades_v1_classes.txt', 'r') as f:
     for line in f.readlines():
-        label.append(line.strip())
+        label.append(line.strip().split()[0])
 
 relationship_classes = []
-with open('relationship_classes.txt', 'r') as f:
+with open('./annotations/relationship_classes.txt', 'r') as f:
     for line in f.readlines():
         relationship_classes.append(line.strip())
 
 object_classes = ['__background__']
-with open('object_classes.txt', 'r') as f:
+with open('./annotations/object_classes.txt', 'r') as f:
     for line in f.readlines():
         object_classes.append(line.strip())
 
