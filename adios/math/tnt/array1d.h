@@ -107,7 +107,7 @@ template <typename T> int max_index(const Array1D<T> &a);
 // distance operators
 template <typename T> T dot(const Array1D<T> &a, const Array1D<T> &b);
 
-// overloaded maths operators
+// overloaded math operators
 template <typename T> Array1D<T> log(const Array1D<T> &a);
 template <typename T> void sqrt(Array1D<T> &b, const Array1D<T> &a);
 template <typename T> Array1D<T> sqrt(const Array1D<T> &a);
@@ -852,7 +852,7 @@ T dot(const Array1D<T> &a, const Array1D<T> &b)
 
 
 //////////////////////////////////////////////////////////////////////////////
-// overloaded maths operators
+// overloaded math operators
 //////////////////////////////////////////////////////////////////////////////
 
 // b = log(a)
