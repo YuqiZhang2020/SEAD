@@ -28,27 +28,27 @@ HEADERS += ADIOSUtils.h \
            SearchPath.h \
            SignificantPattern.h \
            SpecialLexicons.h \
-           maths/Constants.h \
-           maths/ProbabilityDistributions.h \
-           maths/special.h \
-           maths/STLArithmetics.h \
+           math/Constants.h \
+           math/ProbabilityDistributions.h \
+           math/special.h \
+           math/STLArithmetics.h \
            utils/MiscUtils.h \
            utils/Stringable.h \
            utils/TimeFuncs.h \
-           maths/tnt/array1d.h \
-           maths/tnt/array2d.h \
-           maths/tnt/array3d.h \
-           maths/tnt/jama_chol.h \
-           maths/tnt/jama_chol_funcs.h \
-           maths/tnt/jama_eig.h \
-           maths/tnt/jama_lu.h \
-           maths/tnt/jama_lu_funcs.h \
-           maths/tnt/jama_qr.h \
-           maths/tnt/jama_rq.h \
-           maths/tnt/jama_svd.h \
-           maths/tnt/jama_svd_funcs.h \
-           maths/tnt/random.h \
-           maths/tnt/sparse_array2d.h
+           math/tnt/array1d.h \
+           math/tnt/array2d.h \
+           math/tnt/array3d.h \
+           math/tnt/jama_chol.h \
+           math/tnt/jama_chol_funcs.h \
+           math/tnt/jama_eig.h \
+           math/tnt/jama_lu.h \
+           math/tnt/jama_lu_funcs.h \
+           math/tnt/jama_qr.h \
+           math/tnt/jama_rq.h \
+           math/tnt/jama_svd.h \
+           math/tnt/jama_svd_funcs.h \
+           math/tnt/random.h \
+           math/tnt/sparse_array2d.h
 SOURCES += BasicSymbol.cpp \
            EquivalenceClass.cpp \
            main.cpp \
@@ -57,7 +57,7 @@ SOURCES += BasicSymbol.cpp \
            SearchPath.cpp \
            SignificantPattern.cpp \
            SpecialLexicons.cpp \
-           maths/special.cpp \
+           math/special.cpp \
            utils/MiscUtils.cpp \
            utils/Stringable.cpp \
            utils/TimeFuncs.cpp
