@@ -17,9 +17,7 @@ This directory stores the duration of spatial-contact events for all objects. Di
 
 # Grammar Dictionary Learning with ADIOS
 
-<pre>
 `ModifiedADIOS filename eta alpha context_size coverage`
-</pre>
 
 * filename: file name of each object corpus, such as "object.txt".
 * eta: threshold of detecting divergence in the RDS graph, is set to 0.9 in our model.
