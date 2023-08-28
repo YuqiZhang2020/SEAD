@@ -25,7 +25,7 @@ def read_durations(paths):
         duration_path = os.path.join(paths.project_root, 'duration', duration_filename)
         with open(duration_path) as f:
             duration = f.readlines()
-            durations.update({(os.path.splitext(duration_filename)[0], r_duration[0]): float(r_duration[1]) for r_duration in duration})   
+            durations.update({(os.path.splitext(duration_filename)[0].split("_")[0], r_duration[0]): float(r_duration[1]) for r_duration in duration})   
     return durations
 
 
