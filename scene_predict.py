@@ -235,4 +235,4 @@ def predict(paths, line, t):
                 predict_or = ""
                 break
         results.append(predict_or)
-    return ",".join(results) + ";\n"
+    return results
