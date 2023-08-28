@@ -30,7 +30,7 @@ The stochastic grammars acquired from this step are saved in the "./data/grammar
 # Scene Graph Prediction
 `python ./scene_predict.py`
 
-# Scene Graph Prediction
+# Action Anticipation
 `python ./action_anticipation.py`
 
 
