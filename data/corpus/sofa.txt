@@ -1,1 +1,1 @@
-# object sofa corpus
+# Extract the corpus of the sofa
