@@ -3,7 +3,7 @@
 
 #include "RDSNode.h"
 #include "ADIOSUtils.h"
-#include "maths/special.h"
+#include "math/special.h"
 #include "utils/MiscUtils.h"
 #include "utils/TimeFuncs.h"
 #include "ParseTree.h"
