@@ -58,7 +58,7 @@ SOURCES       = BasicSymbol.cpp \
 		SearchPath.cpp \
 		SignificantPattern.cpp \
 		SpecialLexicons.cpp \
-		maths/special.cpp \
+		math/special.cpp \
 		utils/MiscUtils.cpp \
 		utils/Stringable.cpp \
 		utils/TimeFuncs.cpp 
@@ -260,27 +260,27 @@ DIST          = ../../anaconda3/mkspecs/features/spec_pre.prf \
 		SearchPath.h \
 		SignificantPattern.h \
 		SpecialLexicons.h \
-		maths/Constants.h \
-		maths/ProbabilityDistributions.h \
-		maths/special.h \
-		maths/STLArithmetics.h \
+		math/Constants.h \
+		math/ProbabilityDistributions.h \
+		math/special.h \
+		math/STLArithmetics.h \
 		utils/MiscUtils.h \
 		utils/Stringable.h \
 		utils/TimeFuncs.h \
-		maths/tnt/array1d.h \
-		maths/tnt/array2d.h \
-		maths/tnt/array3d.h \
-		maths/tnt/jama_chol.h \
-		maths/tnt/jama_chol_funcs.h \
-		maths/tnt/jama_eig.h \
-		maths/tnt/jama_lu.h \
-		maths/tnt/jama_lu_funcs.h \
-		maths/tnt/jama_qr.h \
-		maths/tnt/jama_rq.h \
-		maths/tnt/jama_svd.h \
-		maths/tnt/jama_svd_funcs.h \
-		maths/tnt/random.h \
-		maths/tnt/sparse_array2d.h BasicSymbol.cpp \
+		math/tnt/array1d.h \
+		math/tnt/array2d.h \
+		math/tnt/array3d.h \
+		math/tnt/jama_chol.h \
+		math/tnt/jama_chol_funcs.h \
+		math/tnt/jama_eig.h \
+		math/tnt/jama_lu.h \
+		math/tnt/jama_lu_funcs.h \
+		math/tnt/jama_qr.h \
+		math/tnt/jama_rq.h \
+		math/tnt/jama_svd.h \
+		math/tnt/jama_svd_funcs.h \
+		math/tnt/random.h \
+		math/tnt/sparse_array2d.h BasicSymbol.cpp \
 		EquivalenceClass.cpp \
 		main.cpp \
 		RDSGraph.cpp \
@@ -288,7 +288,7 @@ DIST          = ../../anaconda3/mkspecs/features/spec_pre.prf \
 		SearchPath.cpp \
 		SignificantPattern.cpp \
 		SpecialLexicons.cpp \
-		maths/special.cpp \
+		math/special.cpp \
 		utils/MiscUtils.cpp \
 		utils/Stringable.cpp \
 		utils/TimeFuncs.cpp
@@ -677,8 +677,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../../anaconda3/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ADIOSUtils.h BasicSymbol.h EquivalenceClass.h LexiconUnit.h ParseTree.h RDSGraph.h RDSNode.h SearchPath.h SignificantPattern.h SpecialLexicons.h maths/Constants.h maths/ProbabilityDistributions.h maths/special.h maths/STLArithmetics.h utils/MiscUtils.h utils/Stringable.h utils/TimeFuncs.h maths/tnt/array1d.h maths/tnt/array2d.h maths/tnt/array3d.h maths/tnt/jama_chol.h maths/tnt/jama_chol_funcs.h maths/tnt/jama_eig.h maths/tnt/jama_lu.h maths/tnt/jama_lu_funcs.h maths/tnt/jama_qr.h maths/tnt/jama_rq.h maths/tnt/jama_svd.h maths/tnt/jama_svd_funcs.h maths/tnt/random.h maths/tnt/sparse_array2d.h $(DISTDIR)/
-	$(COPY_FILE) --parents BasicSymbol.cpp EquivalenceClass.cpp main.cpp RDSGraph.cpp RDSNode.cpp SearchPath.cpp SignificantPattern.cpp SpecialLexicons.cpp maths/special.cpp utils/MiscUtils.cpp utils/Stringable.cpp utils/TimeFuncs.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ADIOSUtils.h BasicSymbol.h EquivalenceClass.h LexiconUnit.h ParseTree.h RDSGraph.h RDSNode.h SearchPath.h SignificantPattern.h SpecialLexicons.h math/Constants.h math/ProbabilityDistributions.h math/special.h math/STLArithmetics.h utils/MiscUtils.h utils/Stringable.h utils/TimeFuncs.h math/tnt/array1d.h math/tnt/array2d.h math/tnt/array3d.h math/tnt/jama_chol.h math/tnt/jama_chol_funcs.h math/tnt/jama_eig.h math/tnt/jama_lu.h math/tnt/jama_lu_funcs.h math/tnt/jama_qr.h math/tnt/jama_rq.h math/tnt/jama_svd.h math/tnt/jama_svd_funcs.h math/tnt/random.h math/tnt/sparse_array2d.h $(DISTDIR)/
+	$(COPY_FILE) --parents BasicSymbol.cpp EquivalenceClass.cpp main.cpp RDSGraph.cpp RDSNode.cpp SearchPath.cpp SignificantPattern.cpp SpecialLexicons.cpp math/special.cpp utils/MiscUtils.cpp utils/Stringable.cpp utils/TimeFuncs.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -736,8 +736,8 @@ EquivalenceClass.o: EquivalenceClass.cpp EquivalenceClass.h \
 
 main.o: main.cpp RDSGraph.h \
 		RDSNode.h \
-		maths/tnt/array2d.h \
-		maths/tnt/array1d.h \
+		math/tnt/array2d.h \
+		math/tnt/array1d.h \
 		LexiconUnit.h \
 		utils/Stringable.h \
 		ADIOSUtils.h \
@@ -746,7 +746,7 @@ main.o: main.cpp RDSGraph.h \
 		SignificantPattern.h \
 		EquivalenceClass.h \
 		SearchPath.h \
-		maths/special.h \
+		math/special.h \
 		utils/MiscUtils.h \
 		utils/TimeFuncs.h \
 		ParseTree.h
@@ -754,8 +754,8 @@ main.o: main.cpp RDSGraph.h \
 
 RDSGraph.o: RDSGraph.cpp RDSGraph.h \
 		RDSNode.h \
-		maths/tnt/array2d.h \
-		maths/tnt/array1d.h \
+		math/tnt/array2d.h \
+		math/tnt/array1d.h \
 		LexiconUnit.h \
 		utils/Stringable.h \
 		ADIOSUtils.h \
@@ -764,15 +764,15 @@ RDSGraph.o: RDSGraph.cpp RDSGraph.h \
 		SignificantPattern.h \
 		EquivalenceClass.h \
 		SearchPath.h \
-		maths/special.h \
+		math/special.h \
 		utils/MiscUtils.h \
 		utils/TimeFuncs.h \
 		ParseTree.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o RDSGraph.o RDSGraph.cpp
 
 RDSNode.o: RDSNode.cpp RDSNode.h \
-		maths/tnt/array2d.h \
-		maths/tnt/array1d.h \
+		math/tnt/array2d.h \
+		math/tnt/array1d.h \
 		LexiconUnit.h \
 		utils/Stringable.h \
 		ADIOSUtils.h \
@@ -797,9 +797,9 @@ SpecialLexicons.o: SpecialLexicons.cpp SpecialLexicons.h \
 		utils/Stringable.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o SpecialLexicons.o SpecialLexicons.cpp
 
-special.o: maths/special.cpp maths/special.h \
-		maths/Constants.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o special.o maths/special.cpp
+special.o: math/special.cpp math/special.h \
+		math/Constants.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o special.o math/special.cpp
 
 MiscUtils.o: utils/MiscUtils.cpp utils/MiscUtils.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o MiscUtils.o utils/MiscUtils.cpp
