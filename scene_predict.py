@@ -5,6 +5,7 @@ import itertools
 import numpy as np
 import config
 import nltk
+from keras.models import load_model
 
 
 def read_languages(paths):
@@ -190,13 +191,13 @@ def find_closest_tokens(language, tokens, truncate=False):
     return min_distance, best_matched_tokens                 
 
 
-def predict(paths, line, t):
+def predict(paths, obs_sg, t):
     grammar_dict = read_induced_grammar(paths)
     duration_dict = read_durations(paths)
     languages = read_languages(paths)
     
     S = {}
-    v = line.strip().split(";")
+    v = obs_sg.strip().split(";")
     for i in range(len(v)):
         frame = v[i].strip().split(" ")
         for j in range(len(frame)):
@@ -213,7 +214,8 @@ def predict(paths, line, t):
     for k in S.keys():
         grammar = grammar_dict[k]
         language = languages[k]
-        duration = duration_dict[k]
+        key = k+"_duration"
+        duration = duration_dict[key]
         s = " ".join(S[k])
         if s.split()[-1] not in duration:
             d, matched_tokens = find_closest_tokens(language, s.split()[-1])
@@ -236,3 +238,20 @@ def predict(paths, line, t):
                 break
         results.append(predict_or)
     return results
+
+
+def main():
+    paths = config.Paths()
+    start_time = time.time()
+    t = 3
+    with open('./relation_test_3s.txt') as f:
+        lines = f.readlines()
+        for line in lines:
+            results = predict(paths, line, t)
+            print(results)
+    print('Time elapsed: {}'.format(time.time() - start_time))
+
+
+if __name__ == '__main__':
+    main()
+    

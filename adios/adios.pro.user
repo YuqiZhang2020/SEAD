@@ -239,7 +239,7 @@
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:F:/adios/adios.pro</value>
     <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">F:/adios/adios.pro</value>
-    <value type="QString" key="RunConfiguration.Arguments">C:\Users\zhang\Desktop\paper1-20221121\grammar_predict\homeacge\compare\corpus\do_nails.txt 0.9 0.01 5 0.65</value>
+    <value type="QString" key="RunConfiguration.Arguments">C:\Users\zhang\sead\data\corpus\sofa.txt 0.9 0.01 5 0.65</value>
     <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
     <value type="bool" key="RunConfiguration.UseLibrarySearchPath">true</value>

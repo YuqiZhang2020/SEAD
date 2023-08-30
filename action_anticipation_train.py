@@ -4,6 +4,8 @@ from keras.models import Sequential
 from keras.layers import LSTM, Dense, Dropout
 from sklearn.model_selection import train_test_split
 from keras import regularizers
+from keras.optimizers import Adam
+from keras.callbacks import EarlyStopping
 
 
 label = []
@@ -24,19 +26,19 @@ with open('./annotations/object_classes.txt', 'r') as f:
 
 def encode_sg(filename, object_classes, relationship_classes, MAX_SEQUENCE_LENGTH):
     x = []
-    with open(filename, 'r') as relations_file:
-        rs = relations_file.readlines()
-        for relations in rs:
+    with open(filename, 'r') as sg_file:
+        sgs = sg_file.readlines()
+        for sg in sgs:
             v_x = []
-            for sg in relations.strip().split(";"):
+            for sg in sg.strip().split(";"):
                 f_x = np.zeros([len(relationship_classes), len(object_classes)], np.float16)
                 orps = sg.split(",")
                 for orp in orps:
                     o_ = orp.split(":")[0]
                     sr_ = orp.split(":")[1].split("/")[0]
                     cr_ = orp.split(":")[1].split("/")[1]
-                    f_x[relationship_classes.index(sr_),object_classes.index(o_)] = 1
-                    f_x[relationship_classes.index(cr_),object_classes.index(o_)] = 1
+                    f_x[relationship_classes.index(sr_), object_classes.index(o_)] = 1
+                    f_x[relationship_classes.index(cr_), object_classes.index(o_)] = 1
                 v_x.append(f_x)
             x.append(v_x)
     x = np.asarray(x)
@@ -79,7 +81,10 @@ model.add(Dropout(0.2))
 model.add(Dense(128, kernel_regularizer=regularizers.l2(0.01)))
 model.add(Dropout(0.2))
 model.add(Dense(l, activation='sigmoid'))
-model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+model.compile(optimizer=Adam(lr=0.001), loss='binary_crossentropy', metrics=['accuracy'])
 print(model.summary()) 
 
-history = model.fit(train_X, train_y, epochs=50, batch_size=72, validation_data=(val_X, val_y), verbose=2, shuffle=False)
+early_stop = EarlyStopping(monitor='val_loss', patience=10, restore_best_weights=True)
+history = model.fit(train_X, train_y, epochs=50, batch_size=72, validation_data=(val_X, val_y), verbose=2, shuffle=False, callbacks=[early_stop])
+
+model.save_weights("action_anticipation_model.h5")

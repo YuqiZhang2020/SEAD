@@ -5,7 +5,7 @@ import os
 
 class Paths(object):
     def __init__(self):
-        self.project_root = './sead'
+        self.project_root = '/home/zhang/SEAD/data'
 
 
 def set_logger(name='learner.log'):
