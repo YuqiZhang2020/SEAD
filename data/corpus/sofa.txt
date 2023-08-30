@@ -1,1 +1,4 @@
-# Extract the corpus of the sofa
+# Extract the corpus of the sofa in the following format
+
+* in_front_of/not_contacting on_the_side_of/not_contacting behind/not_contacting beneath/sitting_on #
+...

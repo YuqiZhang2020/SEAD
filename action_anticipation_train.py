@@ -87,4 +87,4 @@ print(model.summary())
 early_stop = EarlyStopping(monitor='val_loss', patience=10, restore_best_weights=True)
 history = model.fit(train_X, train_y, epochs=50, batch_size=72, validation_data=(val_X, val_y), verbose=2, shuffle=False, callbacks=[early_stop])
 
-model.save_weights("action_anticipation_model.h5")
+model.save("action_anticipation_model.h5")

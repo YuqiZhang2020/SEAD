@@ -5,6 +5,8 @@ import itertools
 import numpy as np
 import config
 import nltk
+from tensorflow.keras.preprocessing.sequence import pad_sequences
+import action_anticipation_train
 from keras.models import load_model
 
 
@@ -72,7 +74,6 @@ def get_production_prob(selected_edge, grammar):
     # Find the corresponding production rule of the edge, and return its probability
     for production in grammar.productions(lhs=selected_edge.lhs()):
         if production.rhs() == selected_edge.rhs():
-            # print (selected_edge, production.prob())
             return production.prob()
 
 
@@ -188,10 +189,27 @@ def find_closest_tokens(language, tokens, truncate=False):
             else:
                 best_matched_tokens = matched_tokens[:len(valid_tokens)]
 
-    return min_distance, best_matched_tokens                 
+    return min_distance, best_matched_tokens
 
 
-def predict(paths, obs_sg, t):
+def encode_sg(sgs, object_classes, relationship_classes, MAX_SEQUENCE_LENGTH):
+    v_x = []
+    for sg in sgs.strip().split(";"):
+        f_x = np.zeros([len(relationship_classes), len(object_classes)], np.float16)
+        orps = sg.split(",")
+        for orp in orps:
+            o_ = orp.split(":")[0]
+            sr_ = orp.split(":")[1].split("/")[0]
+            cr_ = orp.split(":")[1].split("/")[1]
+            f_x[relationship_classes.index(sr_), object_classes.index(o_)] = 1
+            f_x[relationship_classes.index(cr_), object_classes.index(o_)] = 1
+        v_x.append(f_x)
+    v_x = np.asarray(v_x)
+    v_x = pad_sequences(v_x, maxlen=MAX_SEQUENCE_LENGTH)
+    return v_x
+
+
+def scene_predict(paths, obs_sg, t):
     grammar_dict = read_induced_grammar(paths)
     duration_dict = read_durations(paths)
     languages = read_languages(paths)
@@ -199,22 +217,23 @@ def predict(paths, obs_sg, t):
     S = {}
     v = obs_sg.strip().split(";")
     for i in range(len(v)):
-        frame = v[i].strip().split(" ")
-        for j in range(len(frame)):
-            o_rs = frame[j].split(",")
-            for o_r in o_rs:
-                if o_r != "":
-                    o_ = o_r.split(":")[0]
-                    r_ = o_r.split(":")[1]
+        for j in range(len(v[i])):
+            orps = v[i][j].split(",")
+            for orp in orps:
+                if orp != "":
+                    o_ = orp.split(":")[0]
+                    sc_ = orp.split(":")[1]
                     if o_ not in S:
-                        S[o_] = [r_]
-                    elif r_ != S[o_][-1]:
-                        S[o_].append(r_)
-    results = []
+                        S[o_] = [sc_]
+                    elif sc_ != S[o_][-1]:
+                        S[o_].append(sc_)
+    pre_sg = ""
     for k in S.keys():
+        # Obtain the stochastic grammar for object k
         grammar = grammar_dict[k]
         language = languages[k]
-        key = k+"_duration"
+        # Obtain the duration of spatial-contact events for object k
+        key = k + "_duration"
         duration = duration_dict[key]
         s = " ".join(S[k])
         if s.split()[-1] not in duration:
@@ -222,35 +241,35 @@ def predict(paths, obs_sg, t):
             tn = duration[matched_tokens[0]]
         else:
             tn = duration[s.split()[-1]]
-        predict_or = ""
         while(tn<t):
             tokens = s.split()
             d, matched_tokens = find_closest_tokens(language, tokens)
             lr, pr = predict_next_symbols(grammar, matched_tokens)
-            if len(pr) != 0:
-                res = lr[pr.index(max(pr))]
-                predict_or = k + ":" + res
-                if res in duration:
-                    tn += duration[res]
-                s += (" " + res)
-            else:
-                predict_or = ""
-                break
-        results.append(predict_or)
-    return results
+            res = lr[pr.index(max(pr))]
+            pre_osr = k + ":" + res
+            tn += duration[res]
+            s += (" " + res)
+            pre_sg += pre_osr + ","
+    return pre_sg
 
 
 def main():
     paths = config.Paths()
     start_time = time.time()
+    action_model = load_model("action_anticipation_model.h5")
+    MAX_SEQUENCE_LENGTH = 4
     t = 3
-    with open('./relation_test_3s.txt') as f:
+    results = []
+    with open('relation_test.txt') as f:
         lines = f.readlines()
         for line in lines:
-            results = predict(paths, line, t)
-            print(results)
+            pre_sg = scene_predict(paths, line, t)
+            all_sg = line + pre_sg
+            all_sg_encode = encode_sg(all_sg, action_anticipation_train.object_classes, action_anticipation_train.relationship_classes, MAX_SEQUENCE_LENGTH)
+            res = action_model.predict(np.array([all_sg_encode]))
+            results.append(res[0]) # Can be utilized for calculating mean Average Precision
+    
     print('Time elapsed: {}'.format(time.time() - start_time))
-
 
 if __name__ == '__main__':
     main()
