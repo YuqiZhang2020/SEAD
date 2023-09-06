@@ -214,20 +214,19 @@ def scene_predict(paths, obs_sg, t):
     grammar_dict = read_induced_grammar(paths)
     duration_dict = read_durations(paths)
     languages = read_languages(paths)
-
+    
     S = {}
     v = obs_sg.strip().split(";")
-    for i in range(len(v)):
-        for j in range(len(v[i])):
-            orps = v[i][j].split(",")
-            for orp in orps:
-                if orp != "":
-                    o_ = orp.split(":")[0]
-                    sc_ = orp.split(":")[1]
-                    if o_ not in S:
-                        S[o_] = [sc_]
-                    elif sc_ != S[o_][-1]:
-                        S[o_].append(sc_)
+    for i in range(0, len(v)-1):
+        orps = v[i].split(",")
+        for orp in orps:
+            if orp != "":
+                o_ = orp.split(":")[0]
+                sc_ = orp.split(":")[1]
+                if o_ not in S:
+                    S[o_] = [sc_]
+                elif sc_ != S[o_][-1]:
+                    S[o_].append(sc_)
     pre_sg = ""
     for k in S.keys():
         grammar = grammar_dict[k]
@@ -246,6 +245,7 @@ def scene_predict(paths, obs_sg, t):
             pre_osr = k + ":" + res
             tn += duration_dict[(k, res)]
             s += (" " + res)
+
             pre_sg += pre_osr + ","
     return pre_sg
 
@@ -255,7 +255,7 @@ def main():
     start_time = time.time()
 
     MAX_SEQUENCE_LENGTH = 4
-    t = 3
+    t = 1
 
     relationship_classes = []
     with open('./annotations/relationship_classes.txt', 'r') as f:
