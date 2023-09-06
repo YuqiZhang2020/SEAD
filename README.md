@@ -16,8 +16,9 @@ This directory stores the grammar files for all objects. Each object has an asso
 This directory stores the duration of spatial-contact events for all objects. Distinct spatial-contact events corresponding to each object are stored in a file named "object_duration.txt", such as "sofa_duration.txt", where each line corresponds to a spatial-contact event along with its average duration associated with the object.
 
 # Grammar Dictionary Learning with ADIOS
-
-`ModifiedADIOS filename eta alpha context_size coverage`
+```bash
+ModifiedADIOS filename eta alpha context_size coverage
+```
 
 * __filename__: the file name of each object's corpus in "./data/corpus/", such as "sofa.txt".
 * __eta__: is set to 0.9 in our model.
@@ -27,11 +28,11 @@ This directory stores the duration of spatial-contact events for all objects. Di
 
 The stochastic grammars acquired from this step are saved in the "./data/grammar/", such as "sofa.pcfg".
 
-# Scene Graph Prediction
-`python ./scene_predict.py`
-
 # Action Anticipation Model Training
 `python ./action_anticipation_train.py`
+
+# Action Anticipation
+`python ./action_anticipation_test.py`
 
 
 
