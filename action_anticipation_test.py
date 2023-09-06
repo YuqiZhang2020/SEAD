@@ -245,7 +245,6 @@ def scene_predict(paths, obs_sg, t):
             pre_osr = k + ":" + res
             tn += duration_dict[(k, res)]
             s += (" " + res)
-
             pre_sg += pre_osr + ","
     return pre_sg
 
@@ -255,7 +254,7 @@ def main():
     start_time = time.time()
 
     MAX_SEQUENCE_LENGTH = 4
-    t = 1
+    t = 3
 
     relationship_classes = []
     with open('./annotations/relationship_classes.txt', 'r') as f:
