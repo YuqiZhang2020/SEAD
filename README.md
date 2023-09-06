@@ -2,15 +2,15 @@
 Scene and Action Joint Prediction Model v1.0.
 
 # Data preparation
-Download [Action Genome annotations](https://drive.google.com/drive/folders/1LGGPK_QgGbh9gH9SDFv_9LIhBliZbZys) and place them under ./annotations/.
+Download the annotation scene graphs files from [Action Genome annotations](https://drive.google.com/drive/folders/1LGGPK_QgGbh9gH9SDFv_9LIhBliZbZys) and place them under ./annotations/.
 
-Create the following three directories and corresponding files under the ./data/ directory based on the annotation files under ./annotations/:
+Create the following three directories and their corresponding files under ./data/, based on the annotation scene graphs files under ./annotations/:
 
 * __corpus__:
-This directory stores the corpus files for all objects. The corpus for each object is a file named "object.txt", such as "sofa.txt", in which, each line corresponds to a spatial-contact event sequence for a video (starting with "*" and ending with "#").
+This directory stores the corpus files for all objects. The corpus for each object is stored in a file named "object.txt", such as "sofa.txt", in which, each line corresponds to a spatial-contact event sequence for a video (starting with "*" and ending with "#").
 
 * __grammar__:
-This directory stores the grammar files for all objects. Each object has an associated stochastic grammar file named "object.pcfg", such as "sofa.pcfg". These grammar files are learned from the following "Grammar Dictionary Learning" step.
+This directory stores the grammar files for all objects. Each object is associated with a stochastic grammar file named "object.pcfg", such as "sofa.pcfg". These grammar files are learned from the following "Grammar Dictionary Learning with ADIOS" step.
 
 * __duration__:
 This directory stores the duration of spatial-contact events for all objects. Distinct spatial-contact events corresponding to each object are stored in a file named "object_duration.txt", such as "sofa_duration.txt", where each line corresponds to a spatial-contact event along with its average duration associated with the object.
@@ -29,6 +29,7 @@ ModifiedADIOS filename eta alpha context_size coverage
 The stochastic grammars acquired from this step are saved in the "./data/grammar/", such as "sofa.pcfg".
 
 # Action Anticipation Model Training
+You can train the action anticipation module by running the action_anticipation_train.py.
 ```bash
 python ./action_anticipation_train.py
 ```
