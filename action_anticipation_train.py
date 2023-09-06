@@ -17,11 +17,30 @@ relationship_classes = []
 with open('./annotations/relationship_classes.txt', 'r') as f:
     for line in f.readlines():
         relationship_classes.append(line.strip())
+relationship_classes[0] = 'looking_at'
+relationship_classes[1] = 'not_looking_at'
+relationship_classes[5] = 'in_front_of'
+relationship_classes[7] = 'on_the_side_of'
+relationship_classes[10] = 'covered_by'
+relationship_classes[11] = 'drinking_from'
+relationship_classes[13] = 'have_it_on_the_back'
+relationship_classes[15] = 'leaning_on'
+relationship_classes[16] = 'lying_on'
+relationship_classes[17] = 'not_contacting'
+relationship_classes[18] = 'other_relationship'
+relationship_classes[19] = 'sitting_on'
+relationship_classes[20] = 'standing_on'
+relationship_classes[25] = 'writing_on'
 
-object_classes = []
+object_classes = ['__background__']
 with open('./annotations/object_classes.txt', 'r') as f:
     for line in f.readlines():
         object_classes.append(line.strip())
+object_classes[9] = 'closet/cabinet'
+object_classes[11] = 'cup/glass/bottle'
+object_classes[23] = 'paper/notebook'
+object_classes[24] = 'phone/camera'
+object_classes[31] = 'sofa/couch'
 
 
 def encode_sg(filename, object_classes, relationship_classes, MAX_SEQUENCE_LENGTH):
@@ -34,11 +53,12 @@ def encode_sg(filename, object_classes, relationship_classes, MAX_SEQUENCE_LENGT
                 f_x = np.zeros([len(relationship_classes), len(object_classes)], np.float16)
                 orps = sg.split(",")
                 for orp in orps:
-                    o_ = orp.split(":")[0]
-                    sr_ = orp.split(":")[1].split("/")[0]
-                    cr_ = orp.split(":")[1].split("/")[1]
-                    f_x[relationship_classes.index(sr_), object_classes.index(o_)] = 1
-                    f_x[relationship_classes.index(cr_), object_classes.index(o_)] = 1
+                    if orp.replace("\n", "").strip() != "":
+                        o_ = orp.split(":")[0]
+                        sr_ = orp.split(":")[1].split("/")[0]
+                        cr_ = orp.split(":")[1].split("/")[1]
+                        f_x[relationship_classes.index(sr_), object_classes.index(o_)] = 1
+                        f_x[relationship_classes.index(cr_), object_classes.index(o_)] = 1
                 v_x.append(f_x)
             x.append(v_x)
     x = np.asarray(x)

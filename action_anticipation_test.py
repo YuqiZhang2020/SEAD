@@ -5,15 +5,14 @@ import itertools
 import numpy as np
 import config
 import nltk
-from tensorflow.keras.preprocessing.sequence import pad_sequences
-import action_anticipation_train
 from keras.models import load_model
+from tensorflow.keras.preprocessing.sequence import pad_sequences
 
 
 def read_languages(paths):
     languages = dict()
-    for corpus_filename in os.listdir(os.path.join(paths.project_root, 'corpus')):
-        corpus_path = os.path.join(paths.project_root, 'corpus', corpus_filename)
+    for corpus_filename in os.listdir(os.path.join(paths.data_root, 'corpus')):
+        corpus_path = os.path.join(paths.data_root, 'corpus', corpus_filename)
         with open(corpus_path) as f:
             language = f.readlines()
             language = [s.strip().split() for s in language]
@@ -24,11 +23,11 @@ def read_languages(paths):
 
 def read_durations(paths):
     durations = dict()
-    for duration_filename in os.listdir(os.path.join(paths.project_root, 'duration')):
-        duration_path = os.path.join(paths.project_root, 'duration', duration_filename)
+    for duration_filename in os.listdir(os.path.join(paths.data_root, 'duration')):
+        duration_path = os.path.join(paths.data_root, 'duration', duration_filename)
         with open(duration_path) as f:
             duration = f.readlines()
-            durations.update({(os.path.splitext(duration_filename)[0].split("_")[0], r_duration[0]): float(r_duration[1]) for r_duration in duration})   
+            durations.update({(os.path.splitext(duration_filename)[0].split("_")[0], r_d.split()[0]): float(r_d.split()[1]) for r_d in duration})   
     return durations
 
 
@@ -61,8 +60,8 @@ def get_pcfg(rules):
 def read_induced_grammar(paths):
     # Read grammar into nltk
     grammar_dict = dict()
-    for or_grammar_file in os.listdir(os.path.join(paths.project_root, 'grammar')):
-        with open(os.path.join(paths.project_root, 'grammar', or_grammar_file)) as f:
+    for or_grammar_file in os.listdir(os.path.join(paths.data_root, 'grammar')):
+        with open(os.path.join(paths.data_root, 'grammar', or_grammar_file)) as f:
             rules = [rule.strip() for rule in f.readlines()]
             grammar_rules = get_pcfg(rules)
             grammar = nltk.PCFG.fromstring(grammar_rules)
@@ -198,13 +197,15 @@ def encode_sg(sgs, object_classes, relationship_classes, MAX_SEQUENCE_LENGTH):
         f_x = np.zeros([len(relationship_classes), len(object_classes)], np.float16)
         orps = sg.split(",")
         for orp in orps:
-            o_ = orp.split(":")[0]
-            sr_ = orp.split(":")[1].split("/")[0]
-            cr_ = orp.split(":")[1].split("/")[1]
-            f_x[relationship_classes.index(sr_), object_classes.index(o_)] = 1
-            f_x[relationship_classes.index(cr_), object_classes.index(o_)] = 1
+            if orp.replace("\n", "").strip() != "":
+                o_ = orp.split(":")[0]
+                sr_ = orp.split(":")[1].split("/")[0]
+                cr_ = orp.split(":")[1].split("/")[1]
+                f_x[relationship_classes.index(sr_), object_classes.index(o_)] = 1
+                f_x[relationship_classes.index(cr_), object_classes.index(o_)] = 1
         v_x.append(f_x)
     v_x = np.asarray(v_x)
+    v_x = v_x[np.newaxis, :, :, :]
     v_x = pad_sequences(v_x, maxlen=MAX_SEQUENCE_LENGTH)
     return v_x
 
@@ -213,7 +214,6 @@ def scene_predict(paths, obs_sg, t):
     grammar_dict = read_induced_grammar(paths)
     duration_dict = read_durations(paths)
     languages = read_languages(paths)
-    
     S = {}
     v = obs_sg.strip().split(";")
     for i in range(len(v)):
@@ -229,10 +229,10 @@ def scene_predict(paths, obs_sg, t):
                         S[o_].append(sc_)
     pre_sg = ""
     for k in S.keys():
-        # Obtain the stochastic grammar for object k
+        # obtain the stochastic grammar for object k
         grammar = grammar_dict[k]
         language = languages[k]
-        # Obtain the duration of spatial-contact events for object k
+        # obtain the duration of spatial-contact events for object k
         key = k + "_duration"
         duration = duration_dict[key]
         s = " ".join(S[k])
@@ -256,21 +256,55 @@ def scene_predict(paths, obs_sg, t):
 def main():
     paths = config.Paths()
     start_time = time.time()
-    action_model = load_model("action_anticipation_model.h5")
+
     MAX_SEQUENCE_LENGTH = 4
     t = 3
+
+    relationship_classes = []
+    with open('./annotations/relationship_classes.txt', 'r') as f:
+        for line in f.readlines():
+            relationship_classes.append(line.strip())
+    relationship_classes[0] = 'looking_at'
+    relationship_classes[1] = 'not_looking_at'
+    relationship_classes[5] = 'in_front_of'
+    relationship_classes[7] = 'on_the_side_of'
+    relationship_classes[10] = 'covered_by'
+    relationship_classes[11] = 'drinking_from'
+    relationship_classes[13] = 'have_it_on_the_back'
+    relationship_classes[15] = 'leaning_on'
+    relationship_classes[16] = 'lying_on'
+    relationship_classes[17] = 'not_contacting'
+    relationship_classes[18] = 'other_relationship'
+    relationship_classes[19] = 'sitting_on'
+    relationship_classes[20] = 'standing_on'
+    relationship_classes[25] = 'writing_on'
+
+    object_classes = ['__background__']
+    with open('./annotations/object_classes.txt', 'r') as f:
+        for line in f.readlines():
+            object_classes.append(line.strip())
+    object_classes[9] = 'closet/cabinet'
+    object_classes[11] = 'cup/glass/bottle'
+    object_classes[23] = 'paper/notebook'
+    object_classes[24] = 'phone/camera'
+    object_classes[31] = 'sofa/couch'
+
+    model = load_model("action_anticipation_model.h5")
+
     results = []
     with open('relation_test.txt') as f:
         lines = f.readlines()
         for line in lines:
             pre_sg = scene_predict(paths, line, t)
             all_sg = line + pre_sg
-            all_sg_encode = encode_sg(all_sg, action_anticipation_train.object_classes, action_anticipation_train.relationship_classes, MAX_SEQUENCE_LENGTH)
-            res = action_model.predict(np.array([all_sg_encode]))
+            
+            tx = encode_sg(all_sg, object_classes, relationship_classes, MAX_SEQUENCE_LENGTH)
+            tx = tx.reshape(tx.shape[1], tx.shape[2]*tx.shape[3])
+            tx = tx.astype('float16')
+            res = model.predict(np.array([tx]))
             results.append(res[0]) # Can be utilized for calculating mean Average Precision
     
     print('Time elapsed: {}'.format(time.time() - start_time))
 
 if __name__ == '__main__':
     main()
-    
