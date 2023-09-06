@@ -29,13 +29,11 @@ ModifiedADIOS filename eta alpha context_size coverage
 The stochastic grammars acquired from this step are saved in the "./data/grammar/", such as "sofa.pcfg".
 
 # Action Anticipation Model Training
-`python ./action_anticipation_train.py`
+```bash
+python ./action_anticipation_train.py
+```
 
 # Action Anticipation
+```bash
 `python ./action_anticipation_test.py`
-
-
-
-
-
-
+```
