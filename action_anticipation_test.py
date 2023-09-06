@@ -214,6 +214,7 @@ def scene_predict(paths, obs_sg, t):
     grammar_dict = read_induced_grammar(paths)
     duration_dict = read_durations(paths)
     languages = read_languages(paths)
+
     S = {}
     v = obs_sg.strip().split(";")
     for i in range(len(v)):
@@ -229,25 +230,21 @@ def scene_predict(paths, obs_sg, t):
                         S[o_].append(sc_)
     pre_sg = ""
     for k in S.keys():
-        # obtain the stochastic grammar for object k
         grammar = grammar_dict[k]
         language = languages[k]
-        # obtain the duration of spatial-contact events for object k
-        key = k + "_duration"
-        duration = duration_dict[key]
         s = " ".join(S[k])
-        if s.split()[-1] not in duration:
+        if (k, s.split()[-1]) not in duration_dict:
             d, matched_tokens = find_closest_tokens(language, s.split()[-1])
-            tn = duration[matched_tokens[0]]
+            tn = duration_dict[(k, matched_tokens[0])]
         else:
-            tn = duration[s.split()[-1]]
+            tn = duration_dict[(k, s.split()[-1])]
         while(tn<t):
             tokens = s.split()
             d, matched_tokens = find_closest_tokens(language, tokens)
             lr, pr = predict_next_symbols(grammar, matched_tokens)
             res = lr[pr.index(max(pr))]
             pre_osr = k + ":" + res
-            tn += duration[res]
+            tn += duration_dict[(k, res)]
             s += (" " + res)
             pre_sg += pre_osr + ","
     return pre_sg
@@ -297,7 +294,6 @@ def main():
         for line in lines:
             pre_sg = scene_predict(paths, line, t)
             all_sg = line + pre_sg
-            
             tx = encode_sg(all_sg, object_classes, relationship_classes, MAX_SEQUENCE_LENGTH)
             tx = tx.reshape(tx.shape[1], tx.shape[2]*tx.shape[3])
             tx = tx.astype('float16')
